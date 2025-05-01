@@ -1,11 +1,11 @@
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
+import { useAuth } from '@/contexts/AuthContext';
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -13,35 +13,40 @@ const AuthPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [university, setUniversity] = useState('');
-  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const { signIn, signUp } = useAuth();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
     
     // Simple validation
     if (!email || !password) {
       toast.error('Please fill in all required fields');
+      setIsSubmitting(false);
       return;
     }
     
     if (!isLogin && !name) {
       toast.error('Please provide your name');
+      setIsSubmitting(false);
       return;
     }
     
-    // Mock authentication (in a real app, this would call an API)
-    setTimeout(() => {
-      // Store user info in localStorage for demo purposes
-      localStorage.setItem('c2c-user', JSON.stringify({
-        name: name || 'Demo User',
-        email,
-        university: university || 'Demo University',
-        isLoggedIn: true
-      }));
-      
-      toast.success(isLogin ? 'Welcome back!' : 'Account created successfully!');
-      navigate('/dashboard');
-    }, 1000);
+    try {
+      if (isLogin) {
+        // Login
+        await signIn(email, password);
+      } else {
+        // Register
+        await signUp(email, password, name, university);
+      }
+    } catch (error) {
+      console.error('Authentication error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -113,8 +118,11 @@ const AuthPage = () => {
               <Button
                 type="submit"
                 className="w-full bg-gradient-to-r from-c2c-purple to-c2c-vibrant-purple hover:from-c2c-vibrant-purple hover:to-c2c-purple"
+                disabled={isSubmitting}
               >
-                {isLogin ? 'Sign In' : 'Create Account'}
+                {isSubmitting 
+                  ? (isLogin ? 'Signing In...' : 'Creating Account...') 
+                  : (isLogin ? 'Sign In' : 'Create Account')}
               </Button>
             </form>
           </CardContent>
@@ -122,6 +130,7 @@ const AuthPage = () => {
             <p className="text-white/60 text-center text-sm w-full">
               {isLogin ? "Don't have an account? " : "Already have an account? "}
               <button
+                type="button"
                 onClick={() => setIsLogin(!isLogin)}
                 className="text-c2c-purple hover:text-c2c-vibrant-purple underline"
               >

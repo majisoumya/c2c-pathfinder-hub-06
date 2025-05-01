@@ -1,47 +1,20 @@
 
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import ProfileSidebar from './dashboard/ProfileSidebar';
 import ContentFeed from './dashboard/ContentFeed';
 import NavigationSidebar from './dashboard/NavigationSidebar';
-import { toast } from 'sonner';
-
-interface UserData {
-  name: string;
-  email: string;
-  university: string;
-  isLoggedIn: boolean;
-}
+import { useAuth } from '@/contexts/AuthContext';
 
 const Dashboard = () => {
-  const [userData, setUserData] = useState<UserData | null>(null);
-  const navigate = useNavigate();
+  const { user } = useAuth();
   
-  useEffect(() => {
-    const storedUser = localStorage.getItem('c2c-user');
-    
-    if (!storedUser) {
-      toast.error('Please sign in to access the dashboard');
-      navigate('/auth');
-      return;
-    }
-    
-    try {
-      const parsedUser = JSON.parse(storedUser);
-      setUserData(parsedUser);
-    } catch (error) {
-      console.error('Error parsing user data:', error);
-      navigate('/auth');
-    }
-  }, [navigate]);
-
-  if (!userData) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-c2c-dark">
-        <div className="animate-pulse text-white/60">Loading dashboard...</div>
-      </div>
-    );
-  }
+  // Extract user data from Supabase user object
+  const userData = {
+    name: user?.user_metadata?.name || 'User',
+    email: user?.email || '',
+    university: user?.user_metadata?.university || '',
+    isLoggedIn: !!user
+  };
 
   return (
     <div className="min-h-screen bg-c2c-dark flex flex-col md:flex-row">
