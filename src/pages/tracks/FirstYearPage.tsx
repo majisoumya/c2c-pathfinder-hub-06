@@ -3,7 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
+import { CustomProgress } from '@/components/ui/custom-progress';
 import NavigationSidebar from '../../components/dashboard/NavigationSidebar';
 
 const FirstYearPage = () => {
@@ -122,11 +122,11 @@ const FirstYearPage = () => {
                         {milestone.status}
                       </span>
                     </div>
-                    <Progress value={milestone.progress} className="h-2 bg-white/10" indicatorClassName={`${
-                      milestone.status === 'Completed'
-                        ? 'bg-green-500'
-                        : 'bg-gradient-to-r from-c2c-purple to-c2c-blue'
-                    }`} />
+                    <CustomProgress 
+                      value={milestone.progress} 
+                      className="bg-white/10" 
+                      indicatorColor={milestone.status === 'Completed' ? 'var(--green-500)' : 'linear-gradient(to right, var(--c2c-purple), var(--c2c-blue))'}
+                    />
                   </div>
                 ))}
               </CardContent>

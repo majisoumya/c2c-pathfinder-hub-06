@@ -3,7 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
+import { CustomProgress } from '@/components/ui/custom-progress';
 import { Badge } from '@/components/ui/badge';
 import NavigationSidebar from '../../components/dashboard/NavigationSidebar';
 
@@ -124,11 +124,15 @@ const ThirdYearPage = () => {
                         {milestone.status}
                       </span>
                     </div>
-                    <Progress value={milestone.progress} className="h-2 bg-white/10" indicatorClassName={`${
-                      milestone.status === 'Completed'
-                        ? 'bg-green-500'
-                        : 'bg-gradient-to-r from-c2c-vibrant-purple to-c2c-pink'
-                    }`} />
+                    <CustomProgress 
+                      value={milestone.progress} 
+                      className="bg-white/10"
+                      indicatorColor={
+                        milestone.status === 'Completed'
+                          ? 'var(--green-500)'
+                          : 'linear-gradient(to right, var(--c2c-vibrant-purple), var(--c2c-pink))'
+                      }
+                    />
                   </div>
                 ))}
               </CardContent>
@@ -152,7 +156,7 @@ const ThirdYearPage = () => {
                       <span className="text-white/60 text-sm">Completion</span>
                       <span className="text-white/60 text-sm">60%</span>
                     </div>
-                    <Progress value={60} className="h-2 bg-white/10" indicatorClassName="bg-gradient-to-r from-c2c-vibrant-purple to-c2c-pink" />
+                    <CustomProgress value={60} className="bg-white/10" indicatorColor="linear-gradient(to right, var(--c2c-vibrant-purple), var(--c2c-pink))"/>
                   </div>
                 </div>
                 

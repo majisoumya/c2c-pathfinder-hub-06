@@ -3,7 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
+import { CustomProgress } from '@/components/ui/custom-progress';
 import NavigationSidebar from '../../components/dashboard/NavigationSidebar';
 
 const SecondYearPage = () => {
@@ -119,11 +119,15 @@ const SecondYearPage = () => {
                         {milestone.status}
                       </span>
                     </div>
-                    <Progress value={milestone.progress} className="h-2 bg-white/10" indicatorClassName={`${
-                      milestone.status === 'Completed'
-                        ? 'bg-green-500'
-                        : 'bg-gradient-to-r from-c2c-purple to-c2c-vibrant-purple'
-                    }`} />
+                    <CustomProgress 
+                      value={milestone.progress} 
+                      className="bg-white/10" 
+                      indicatorColor={
+                        milestone.status === 'Completed' 
+                          ? 'var(--green-500)' 
+                          : 'linear-gradient(to right, var(--c2c-purple), var(--c2c-vibrant-purple))'
+                      }
+                    />
                   </div>
                 ))}
               </CardContent>
@@ -140,7 +144,7 @@ const SecondYearPage = () => {
                       <span className="text-white">Technical Skills</span>
                       <span className="text-white/60">70%</span>
                     </div>
-                    <Progress value={70} className="h-2 bg-white/10" indicatorClassName="bg-gradient-to-r from-c2c-purple to-c2c-blue" />
+                    <CustomProgress value={70} className="bg-white/10" indicatorColor="linear-gradient(to right, var(--c2c-purple), var(--c2c-blue))"/>
                   </div>
                   
                   <div>
@@ -148,7 +152,7 @@ const SecondYearPage = () => {
                       <span className="text-white">Communication</span>
                       <span className="text-white/60">60%</span>
                     </div>
-                    <Progress value={60} className="h-2 bg-white/10" indicatorClassName="bg-gradient-to-r from-c2c-vibrant-purple to-c2c-pink" />
+                    <CustomProgress value={60} className="bg-white/10" indicatorColor="linear-gradient(to right, var(--c2c-vibrant-purple), var(--c2c-pink))"/>
                   </div>
                   
                   <div>
@@ -156,7 +160,7 @@ const SecondYearPage = () => {
                       <span className="text-white">Leadership</span>
                       <span className="text-white/60">40%</span>
                     </div>
-                    <Progress value={40} className="h-2 bg-white/10" indicatorClassName="bg-gradient-to-r from-c2c-blue-ocean to-c2c-blue" />
+                    <CustomProgress value={40} className="bg-white/10" indicatorColor="linear-gradient(to right, var(--c2c-blue-ocean), var(--c2c-blue))"/>
                   </div>
                   
                   <div>
@@ -164,7 +168,7 @@ const SecondYearPage = () => {
                       <span className="text-white">Problem-Solving</span>
                       <span className="text-white/60">65%</span>
                     </div>
-                    <Progress value={65} className="h-2 bg-white/10" indicatorClassName="bg-gradient-to-r from-c2c-pink to-c2c-purple" />
+                    <CustomProgress value={65} className="bg-white/10" indicatorColor="linear-gradient(to right, var(--c2c-pink), var(--c2c-purple))"/>
                   </div>
                 </div>
               </CardContent>

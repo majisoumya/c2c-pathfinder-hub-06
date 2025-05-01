@@ -17,8 +17,17 @@ import FirstYearPage from "./pages/tracks/FirstYearPage";
 import SecondYearPage from "./pages/tracks/SecondYearPage";
 import ThirdYearPage from "./pages/tracks/ThirdYearPage";
 import FinalYearPage from "./pages/tracks/FinalYearPage";
+import "./App.css";
 
 const queryClient = new QueryClient();
+
+// Add CSS variables for our colors to be used by the CustomProgress component
+document.documentElement.style.setProperty('--green-500', '#22c55e');
+document.documentElement.style.setProperty('--c2c-purple', '#9333ea');
+document.documentElement.style.setProperty('--c2c-blue', '#3b82f6');
+document.documentElement.style.setProperty('--c2c-vibrant-purple', '#a855f7');
+document.documentElement.style.setProperty('--c2c-pink', '#ec4899');
+document.documentElement.style.setProperty('--c2c-blue-ocean', '#06b6d4');
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
